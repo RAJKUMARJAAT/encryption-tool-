@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Tool</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Hash Tool</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="text">Input Text:</label>
+                <textarea class="form-control" id="text" name="text" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="algorithm">Select Algorithm:</label>
+                <select class="form-control" id="algorithm" name="algorithm" required>
+                    <option value="sha1">SHA-1</option>
+                    <option value="shake_128">SHAKE-128</option>
+                </select>
+            </div>
+            <div class="form-group" id="shake-length-group" style="display: none;">
+                <label for="length">Output Length (in bytes):</label>
+                <input type="number" class="form-control" id="length" name="length" value="32" min="1" max="64">
+            </div>
+            <button type="submit" class="btn btn-primary">Hash</button>
+        </form>
+        {% if hashed_value %}
+            <h3 class="mt-4">Hashed Value:</h3>
+            <p>{{ hashed_value }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('algorithm').addEventListener('change', function() {
+            var selectedAlgorithm = this.value;
+            var shakeLengthGroup = document.getElementById('shake-length-group');
+            if (selectedAlgorithm === 'shake_128') {
+                shakeLengthGroup.style.display = 'block';
+            } else {
+                shakeLengthGroup.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
